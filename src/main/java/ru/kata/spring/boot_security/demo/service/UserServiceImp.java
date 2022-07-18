@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +35,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return userRepository.findAll();
     }
 
+    // поменять булиан на войд
     @Override
     public boolean saveUser(User user) {
         userRepository.save(user);
@@ -42,11 +45,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    public User findById(long id) {
-        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -67,3 +65,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
                 .collect(Collectors.toSet());
     }
 }
+
+
+

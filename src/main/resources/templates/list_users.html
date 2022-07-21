@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns="http://www.w3.org/1999/html">
-<head>
-  <meta charset="UTF-8">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-  <title>Index</title>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>New user</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
 </head>
 
-
 <body>
-
-
 
 <!--НАВИГАЦИОННАЯ ПАНЕЛЬ-->
 <nav class="navbar navbar-expand-md sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -86,8 +85,6 @@
 
                 <!-- Content here -->
             <div class col-md-9>
-<!--                <a class="list-group-item list-group-item-action list-group-item-white"><h5>All users</h5>-->
-<!--                </a>-->
                 <ul class="list-group" >
                     <li class="list-group-item bg-light"><h5>All users</h5></li>
                 </ul>
@@ -247,8 +244,8 @@
 <!--                                                    <input type="text" class="form-control"-->
 <!--                                                           id="editPassword" name="password">-->
 
-                                                    <label for="roles"><b>Roles</b></label>
-                                                    <select multiple class="form-control form-control-sm" id="roles" name="role"
+                                                    <label for="delRoles"><b>Roles</b></label>
+                                                    <select multiple class="form-control form-control-sm" id="delRoles" name="role"
                                                             size="2">
                                                         <option value="ROLE_ADMIN">ADMIN</option>
                                                         <option value="ROLE_USER">USER</option>

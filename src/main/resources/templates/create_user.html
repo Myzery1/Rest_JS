@@ -62,14 +62,13 @@
                 </ul>
             </div>
         </nav>
-    </div>
 
-    <div th:switch="${users}">
 
-        <main role="main" class="ml-sm-auto col-lg-10 bg-light">
+        <main role="main" class="bg-light col-10">
+            <br>
             <!--            <canvas height="20"></canvas>-->
             <h3>Admin panel</h3>
-            <div class="btn-group btn-group-md">
+            <div class="btn-group btn-group-lg">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link" href="/admin">Users table</a>
@@ -81,61 +80,58 @@
                     </li>
                 </ul>
             </div>
+            <br>
 
 
             <!-- Content here -->
             <div th:switch="${users}">
-                <!--                <a class="list-group-item list-group-item-action list-group-item-white"><h5>All users</h5>-->
-                <!--                </a>-->
-                <ul class="list-group" >
+                <ul class="list-group " >
                     <li class="list-group-item bg-light"><h5>Add new user</h5></li>
                 </ul>
 
                 <ul class="list-group">
-                    <form align="center" th:align="center"
-                          th:action="@{/admin/create_user}" th:object="${user}" method="post">
+                    <form th:action="@{/admin/create_user}" th:object="${user}" method="post">
                         <ul class="list-group">
                             <li class="list-group-item">
 
-                                <div class="form-group">
-                                    <label for="name" class="col-form-label"><b>Name:</b></label>
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                    <label for="name" class="col-form-label col-12 text-center"><b>Name:</b></label>
                                     <input type="text" th:field="*{name}" class="form-control" id="name">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="lastname" class="col-form-label"><b>Lastname:</b></label>
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                    <label for="lastname" class="col-form-label col-12 text-center"><b>Lastname:</b></label>
                                     <input type="text" th:field="*{lastname}" class="form-control" id="lastname"  >
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="age" class="col-form-label"><b>Age:</b></label>
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                    <label for="age" class="col-form-label col-12 text-center"><b>Age:</b></label>
                                     <input type="text" th:field="*{age}" class="form-control" id="age">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label"><b>Email:</b></label>
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                    <label for="email" class="col-form-label col-12 text-center"><b>Email:</b></label>
                                     <input type="text" th:field="*{email}" class="form-control" id="email">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="password" class="col-form-label"><b>Password:</b></label>
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                    <label for="password" class="col-form-label col-12 text-center"><b>Password:</b></label>
                                     <input type="text" th:field="*{password}" class="form-control" id="password">
                                 </div>
 
-                                <label for="roles"><b>Roles</b></label>
-                                <select multiple class="form-control form-control-sm" id="roles" name="role"
+                                <div class="form-group mx-auto" style="width: 200px;">
+                                <label for="roles" class="col-form-label col-12 text-center"><b>Roles</b></label>
+                                <select multiple class="form-control form-control-sm text-center" id="roles" name="role"
                                         size="2" required>
                                     <option value="ROLE_ADMIN">ADMIN</option>
                                     <option value="ROLE_USER" selected>USER</option>
                                 </select>
                                 <br>
-                                <button th:type="submit" class="btn btn-success" value="Add new user">
+                                <button th:type="submit"  style="width: 200px;" class="btn btn-success" value="Add new user">
                                     Add new user
                                 </button>
-
+                                </div>
                             </li>
-
-
                         </ul>
                     </form>
                 </ul>

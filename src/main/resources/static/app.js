@@ -6,8 +6,6 @@ $(async function () {
     getNewUserForm()
 })
 
-// rest into users
-
 const userFetchService = {
     head: {
         'Accept': 'application/json',

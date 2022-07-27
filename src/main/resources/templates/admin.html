@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>New user</title>
+
+</head>
+
+<body>
+
+<!--НАВИГАЦИОННАЯ ПАНЕЛЬ-->
+<nav class="navbar navbar-expand-md sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <a style="color: white; text-align: left;" id="headRole"></a>
+            <ul class="navbar-nav ml-md-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+<!--БОКОВАЯ ПАНЕЛЬ-->
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-white">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <!--                    БОКОВОЙ АДМИН-->
+                    <li class="nav-item">
+                        <a class="nav-link active bg-primary text-white" href="#">
+                            Admin <span class="sr-only"></span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">
+                            <span data-feather="file"></span>
+                            User
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="col-md-9 ml-sm-auto col-lg-10 px-md-4 bg-light">
+            <canvas height="20"></canvas>
+            <h3>Admin panel</h3>
+            <div class="btn-group btn-group-md">
+                <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-users_table-link" data-toggle="tab" href="#nav-list_users"
+                           role="tab" aria-controls="nav-users_table">Users table</a>
+                    </li>
+                    <!--                NEW USER-->
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-user_form-link" data-toggle="tab" href="#nav-add_user"
+                           role="tab" aria-controls="nav-user_form">New user</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-list_users" role="tabpanel">
+                    <div>
+                        <ul class="list-group">
+                            <li class="list-group-item bg-light"><h5>All users</h5></li>
+                        </ul>
+                        <table class="table table-striped bg-white col-md-12" id="tableUsers">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">First Name</th>
+                                <th style="text-align: center">Last Name</th>
+                                <th style="text-align: center">Age</th>
+                                <th style="text-align: center">Email</th>
+                                <th style="text-align: center">Password</th>
+                                <th style="text-align: center">Role</th>
+                                <th style="text-align: center">Edit</th>
+                                <th style="text-align: center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody id="data">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-add_user" role="tabpanel">
+                    <ul class="list-group">
+                        <li class="list-group-item bg-light"><h5>Add new user</h5></li>
+                    </ul>
+                    <div class="container col-4 form-group text-center">
+                        <form role="form" id="defaultSomeForm">
+                            <div class="form-group mx-auto" style="width: 200px;">
+                                <label class="col-form-label col-12 text-center"><b>Name:</b></label>
+                                <input class="form-control" id="CreateUserName" type="text" placeholder="name">
+                            </div>
+                            <div class="form-group mx-auto" style="width: 200px;">
+                                <label class="col-form-label col-12 text-center"><b>Lastname:</b></label>
+                                <input class="form-control" id="CreateUserLastname" type="text" placeholder="lastname">
+                            </div>
+                            <div class="form-group mx-auto" style="width: 200px;">
+                                <label class="col-form-label col-12 text-center"><b>Age:</b></label>
+                                <input class="form-control" id="CreateUserAge" type="number" placeholder="age">
+                            </div>
+                            <div class="form-group mx-auto" style="width: 200px;">
+                                <label class="col-form-label col-12 text-center"><b>Email:</b></label>
+                                <input class="form-control" id="CreateUserEmail" type="text" placeholder="email">
+                            </div>
+                            <div class="form-group mx-auto" style="width: 200px;">
+                                <label class="col-form-label col-12 text-center"><b>Password:</b></label>
+                                <input class="form-control" id="CreateUserPassword" type="password"
+                                       placeholder="password">
+                            </div>
+                            <div class="form-group mx-auto" style="width: 200px;">
+                            <strong><label>Role</label></strong>
+                            <select class="custom-select"
+                                    size="2"
+                                    multiple name="roles"
+                                    id="CreateUserRoles" required>
+                                <option value="ROLE_ADMIN">ADMIN</option>
+                                <option value="ROLE_USER">USER</option>
+                            </select>
+                            </div>
+                            <br>
+                                <button style="width: 200px;" class="btn btn-success"
+                                        id="createUserButton">
+                                    Add new user
+                                </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="someDefaultModal" tabindex="-1" role="dialog" aria-labelledby="someDefaultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="/app.js"></script>
+
+
+</body>
+</html>
+

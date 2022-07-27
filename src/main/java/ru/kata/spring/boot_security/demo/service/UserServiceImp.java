@@ -1,29 +1,22 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService, UserDetailsService {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -38,9 +31,21 @@ public class UserServiceImp implements UserService, UserDetailsService {
     // поменять булиан на войд
     @Override
     public boolean saveUser(User user) {
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
         return true;
     }
+
+    @Override
+    public boolean updateUser(User user) {
+        userRepository.saveAndFlush(user);
+        return true;
+    }
+
+    @Override
+    public User findUserById(long id) {
+        return userRepository.findUserById(id);
+    }
+
 
     @Override
     public void deleteUser(long id) {
@@ -54,15 +59,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                getAuthorities(user.getRoles()));
-    }
-
-    private static Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getAuthority()))
-                .collect(Collectors.toSet());
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return userRepository.findByEmail(name);
     }
 }
 

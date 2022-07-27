@@ -1,10 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -12,9 +8,12 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
-import java.util.*;
+import java.security.Principal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Controller
+@RestController
 public class AdminController {
     private final UserServiceImp userService;
     final UserRepository userRepository;
@@ -26,44 +25,42 @@ public class AdminController {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
-
-    @GetMapping("/admin")
-    public String findAll(Model model) {
-        model.addAttribute("users", userService.listUsers());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByEmail(auth.getName());
-        model.addAttribute("user",user);
-        return "list_users";
+    //вывод всех
+    @GetMapping("/rest")
+    public List<User> findALl() {
+        return userService.listUsers();
+    }
+    // 1
+    @GetMapping("/rest/principal")
+    public User getPrincipalInfo(Principal principal) {
+        return userService.findByEmail(principal.getName());
     }
 
-    @RequestMapping(value="/admin/update",method = {RequestMethod.POST, RequestMethod.GET})
-    public String update(User user,@RequestParam(value = "role") String[] roles){
-        user.setRoles(getRoles(roles));
+    // добавление
+    @PostMapping("/rest")
+    public User createUser(@RequestBody User user) {
+        roleRepository.saveAll(user.getRoles());
         userService.saveUser(user);
-        return "redirect:/admin/";
+        return user;
     }
 
-    @GetMapping("/admin/create_user")
-    public String createUserForm(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByEmail(auth.getName());
-        model.addAttribute("oldUser", user);
-        model.addAttribute("user", new User());
-        model.addAttribute("role", new ArrayList<Role>());
-        return "create_user";
+    // редактирование
+    @PutMapping("/rest/{id}")
+    public User updateUser(@RequestBody User user, @PathVariable ("id") int id) {
+        roleRepository.saveAll(user.getRoles());
+        userService.updateUser(user);
+        return user;
+    }
+    // по айди
+    @GetMapping("/rest/{id}")
+    public User findOneUser(@PathVariable long id) {
+        return userService.findUserById(id);
     }
 
-    @PostMapping("/admin/create_user")
-    public String createUser (@ModelAttribute("user") User user, @RequestParam(value = "role") String[] roles) {
-        user.setRoles(getRoles(roles));
-        userService.saveUser(user);
-        return "redirect:/admin/";
-    }
-
-    @PostMapping("/admin/remove/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
+    @DeleteMapping("/rest/{id}")
+    public String deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
-        return "redirect:/admin/";
+        return ("User was delete, ID " + id);
     }
 
     public Set<Role> getRoles(String[] roles) {
